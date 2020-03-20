@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const App = () => {
 
@@ -28,6 +28,10 @@ const App = () => {
       password: ''  
     })
   }
+
+  useEffect(() => {
+    console.log('ping')
+  }, [])
 
   return (
     <>
