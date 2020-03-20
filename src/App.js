@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import UserForm from './components/UserForm'
+import UserDisplay from './components/UserDisplay'
+import UserContext from './utils/UserContext'
 
 const App = () => {
 
@@ -9,11 +12,11 @@ const App = () => {
     user: {}
   })
 
-  const handleInputChange = ({ target }) => {
+  userState.handleInputChange = ({ target }) => {
     setUserState({ ...userState, [target.name]: target.value })
   }
 
-  const handleRegisterUser = event => {
+  userState.handleRegisterUser = event => {
     event.preventDefault()
     const user = {
       username: userState.username,
@@ -29,45 +32,11 @@ const App = () => {
     })
   }
 
-  useEffect(() => {
-    console.log('ping')
-  }, [])
-
   return (
-    <>
-      <form>
-        <p>
-          <label htmlFor="username">username</label>
-          <input 
-            type="text" 
-            name="username" 
-            value={userState.username}
-            onChange={handleInputChange} />
-        </p>
-        <p>
-          <label htmlFor="email">email</label>
-          <input 
-            type="email" 
-            name="email" 
-            value={userState.email}
-            onChange={handleInputChange} />
-        </p>
-        <p>
-          <label htmlFor="password">password</label>
-          <input 
-            type="password" 
-            name="password" 
-            value={userState.password}
-            onChange={handleInputChange} />
-        </p>
-        <button onClick={handleRegisterUser}>Register</button>
-      </form>
-      <div>
-        <h3>{userState.user.username}</h3>
-        <h4>{userState.user.email}</h4>
-        <h5>{userState.user.password}</h5>
-      </div>
-    </>
+    <UserContext.Provider value={userState}>
+      <UserForm />
+      <UserDisplay />
+    </UserContext.Provider>
   )
 }
 
