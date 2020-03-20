@@ -2,21 +2,68 @@ import React, { useState } from 'react'
 
 const App = () => {
 
-  const [ countState, setCountState ] = useState({
-    text: 'hotdog',
-    count: 0
+  const [ userState, setUserState ] = useState({
+    username: '',
+    email: '',
+    password: '',
+    user: {}
   })
 
-  const handleBtnClick = () => {
-    setCountState({ ...countState, count: countState.count + 1 })
+  const handleInputChange = ({ target }) => {
+    setUserState({ ...userState, [target.name]: target.value })
+  }
+
+  const handleRegisterUser = event => {
+    event.preventDefault()
+    const user = {
+      username: userState.username,
+      email: userState.email,
+      password: userState.password
+    }
+    setUserState({ 
+      ...userState, 
+      user,
+      username: '',
+      email: '',
+      password: ''  
+    })
   }
 
   return (
-    <div>
-      <h1>{countState.text}</h1>
-      <h1>Count: {countState.count}</h1>
-      <button onClick={handleBtnClick}>Click Me</button>
-    </div>
+    <>
+      <form>
+        <p>
+          <label htmlFor="username">username</label>
+          <input 
+            type="text" 
+            name="username" 
+            value={userState.username}
+            onChange={handleInputChange} />
+        </p>
+        <p>
+          <label htmlFor="email">email</label>
+          <input 
+            type="email" 
+            name="email" 
+            value={userState.email}
+            onChange={handleInputChange} />
+        </p>
+        <p>
+          <label htmlFor="password">password</label>
+          <input 
+            type="password" 
+            name="password" 
+            value={userState.password}
+            onChange={handleInputChange} />
+        </p>
+        <button onClick={handleRegisterUser}>Register</button>
+      </form>
+      <div>
+        <h3>{userState.user.username}</h3>
+        <h4>{userState.user.email}</h4>
+        <h5>{userState.user.password}</h5>
+      </div>
+    </>
   )
 }
 
